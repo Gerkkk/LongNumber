@@ -4,6 +4,7 @@
 #include <iostream>
 #include <algorithm>
 
+
 struct long_number {
 public:
     std::string value;
@@ -25,7 +26,10 @@ public:
     long_number operator-() const;
     long_number operator+(long_number y);
     long_number operator-(const long_number& y);
+    long_number operator*(const long_number& y);
     std::string ln_to_string();
 };
+
+long_number simple_mult(const long_number& x, const long_number& y);
 
 #endif //UNTITLED1_LIBRARY_H

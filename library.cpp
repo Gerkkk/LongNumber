@@ -1,8 +1,6 @@
 #include "library.h"
 
 
-
-
 //prints long_number given
 void long_number::print_ln() {
     if (sign == -1) {
@@ -291,6 +289,11 @@ long_number long_number::operator-(const long_number& y) {
     return ret;
 }
 
+long_number long_number::operator*(const long_number& y) {
+    long_number prod = simple_mult((*this), y);
+    return prod;
+}
+
 std::string long_number::ln_to_string() {
     std::string ret;
     if (sign == -1) {
@@ -306,4 +309,71 @@ std::string long_number::ln_to_string() {
         ret.push_back(value[i]);
     }
     return ret;
+}
+
+long_number simple_mult(const long_number& x, const long_number& y) {
+    std::string a = x.value;
+    std::string b = y.value;
+
+    int u = -1;
+    while (a[u + 1] == '0') {
+        u++;
+    }
+
+    if (u != -1) {
+        a = a.substr(u + 1, a.size() - u - 1);
+    }
+
+    u = -1;
+    while (b[u + 1] == '0') {
+        u++;
+    }
+
+    if (u != -1) {
+        b = b.substr(u + 1, b.size() - u - 1);
+    }
+
+    if (a == "0" || b == "0") {
+        long_number ret;
+        ret.sign = 1;
+        ret.precision = 0;
+        ret.value = "0";
+        return ret;
+    } else {
+        std::string c(a.size() + b.size(), '0');
+
+        reverse(a.begin(), a.end());
+        reverse(b.begin(), b.end());
+
+
+        for (int i = 0; i < a.size(); ++i) {
+            for (int j = 0, carry = 0; j < b.size() || carry > 0; ++j) {
+                int cur = (c[i + j] - '0') + (a[i] - '0') * (j < b.size() ? b[j] - '0' : 0) + carry;
+                c[i + j] = cur % 10 + '0';
+                carry = cur / 10;
+            }
+        }
+
+        while (c.size() > 1 && c.back() == '0') {
+            c.pop_back();
+        }
+
+        reverse(c.begin(), c.end());
+
+        long_number ret;
+        ret.sign = x.sign * y.sign;
+        ret.precision = x.precision + y.precision;
+        ret.value = c;
+
+        if (ret.precision >= ret.value.size()) {
+            std::string add;
+            for (int i = 0; i < (ret.precision - ret.value.size() + 1); ++i) {
+                add.push_back('0');
+            }
+            ret.value = add + ret.value;
+        }
+
+        return ret;
+    }
+
 }
