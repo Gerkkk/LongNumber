@@ -3,4 +3,6 @@ project(untitled1)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_library(untitled1 STATIC library.cpp)
+add_library(Library STATIC library.cpp)
+add_executable(Test Test.cpp)
+target_link_libraries(Test Library )

@@ -3,7 +3,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "libuntitled1.a"
+			"path" : "libLibrary.a"
 		}
 	],
 	"backtrace" : 1,
@@ -54,9 +54,9 @@
 			]
 		}
 	],
-	"id" : "untitled1::@6890427a1f51a3e7e1df",
-	"name" : "untitled1",
-	"nameOnDisk" : "libuntitled1.a",
+	"id" : "Library::@6890427a1f51a3e7e1df",
+	"name" : "Library",
+	"nameOnDisk" : "libLibrary.a",
 	"paths" : 
 	{
 		"build" : ".",
