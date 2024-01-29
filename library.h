@@ -11,6 +11,9 @@ public:
     int precision;
     int sign;
 
+    long_number();
+    long_number(double x);
+
     void print_ln();
     [[nodiscard]] long_number abs() const;
     int compare_abs(long_number x);

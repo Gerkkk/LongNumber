@@ -1,6 +1,7 @@
 #include "library.h"
 
 
+
 //prints long_number given
 void long_number::print_ln() {
     if (sign == -1) {
@@ -309,6 +310,45 @@ std::string long_number::ln_to_string() {
         ret.push_back(value[i]);
     }
     return ret;
+}
+
+long_number::long_number() {
+    value = "0";
+    sign = 1;
+    precision = 0;
+}
+
+long_number::long_number(double x) {
+    std::string s = std::to_string(x);
+    int i = 0;
+    bool flag_point = false;
+    int after_point = 0;
+    std::string ret;
+
+    if (s[0] == '-') {
+        sign = -1;
+        i++;
+    } else {
+        sign = 1;
+    }
+
+    while (i < s.size()) {
+        if (s[i] == '.') {
+            flag_point = true;
+        }
+
+        if (isdigit(s[i])) {
+            ret.push_back(s[i]);
+
+            if (flag_point) {
+                after_point++;
+            }
+        }
+        i++;
+    }
+
+    precision = after_point;
+    value = ret;
 }
 
 long_number simple_mult(const long_number& x, const long_number& y) {
