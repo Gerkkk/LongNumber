@@ -12,7 +12,9 @@ public:
     int sign;
 
     long_number();
-    long_number(double x);
+    long_number(long double x);
+    long_number(int x);
+    long_number(std::string x);
 
     void print_ln();
     [[nodiscard]] long_number abs() const;
@@ -30,9 +32,12 @@ public:
     long_number operator+(long_number y);
     long_number operator-(const long_number& y);
     long_number operator*(const long_number& y);
+    long_number operator/(const long_number& y);
     std::string ln_to_string();
 };
 
+long_number operator ""_ln(long double);
 long_number simple_mult(const long_number& x, const long_number& y);
+long_number get_reverse(const long_number& x, int prec);
 
 #endif //UNTITLED1_LIBRARY_H

@@ -31,10 +31,9 @@ void long_number::print_ln() {
 //Compares absolute values of two long_numbers including those with different precisions. Returns 1 if this is greater, -1 if other is greater, 0 otherwise.
 int long_number::compare_abs(long_number x) {
     int res = 0;
-
-    if (x.value.size() - x.precision > value.size() - precision) {
+    if ((int)(x.value.size() - x.precision) > (int)(value.size() - precision)) {
         res = -1;
-    } else if (x.value.size() - x.precision < value.size() - precision) {
+    } else if ((int)(x.value.size() - x.precision) < (int)(value.size() - precision)) {
         res = 1;
     } else {
 
@@ -75,6 +74,7 @@ int long_number::compare_abs(long_number x) {
     return res;
 }
 
+//overloaded operator ==. returns 1 if this long_number equals long_number y, 0 otherwise
 bool long_number::operator==(const long_number &x) {
     if (sign == x.sign && compare_abs(x) == 0) {
         return true;
@@ -83,6 +83,7 @@ bool long_number::operator==(const long_number &x) {
     }
 }
 
+//overloaded operator !=. returns 1 if this long_number not equals long_number y, 0 otherwise
 bool long_number::operator!=(const long_number& x) {
     if (sign != x.sign || compare_abs(x) != 0) {
         return true;
@@ -94,9 +95,10 @@ bool long_number::operator!=(const long_number& x) {
 //returns true if this is greater than given, otherwise - false
 bool long_number::operator>(const long_number& x) {
     bool res = false;
-    if (sign == x.sign && sign == 1) {
-        res =  (compare_abs(x) == 1);
-    }else if (sign == x.sign && sign == -1) {
+    if (1 == x.sign && sign == 1) {
+
+        res = compare_abs(x) == 1;
+    }else if (-1 == x.sign && sign == -1) {
         res = (compare_abs(x) == -1);
     }else if (sign == 1 && x.sign == -1) {
         if (value == "0" && x.value == "0") {
@@ -112,11 +114,19 @@ bool long_number::operator>(const long_number& x) {
 
 //returns true if this is less than given, otherwise - false
 bool long_number::operator<(const long_number& x) {
-    bool res;
-    if (this <= &x && *this != x){
-        res = true;
-    } else {
+    bool res = false;
+    if (1 == x.sign && sign == 1) {
+        res = compare_abs(x) == -1;
+    }else if (-1 == x.sign && sign == -1) {
+        res = (compare_abs(x) == 1);
+    }else if (sign == 1 && x.sign == -1) {
         res = false;
+    } else if (sign == -1 && x.sign == 1)    {
+        if (value == "0" && x.value == "0") {
+            res = false;
+        } else {
+            res = true;
+        }
     }
     return res;
 }
@@ -160,6 +170,7 @@ long_number long_number::promote_precision(const long_number& x){
 
 }
 
+//returns long number that equals sum of absolute values of this long_number and long_number x
 long_number long_number::sum_abs(long_number x) {
     long_number ret;
     long_number this_c = (*this).promote_precision(x);
@@ -192,6 +203,7 @@ long_number long_number::sum_abs(long_number x) {
     return ret;
 }
 
+//returns long number that equals difference of absolute values of this long_number and long_number x
 long_number long_number::diff_abs(long_number x) {
     long_number ret;
     long_number this_c = (*this).promote_precision(x);
@@ -232,6 +244,7 @@ long_number long_number::diff_abs(long_number x) {
     return ret;
 }
 
+//overloaded operator -. returns long_number -this
 long_number long_number::operator-() const {
     long_number ret;
     ret.value = value;
@@ -240,6 +253,7 @@ long_number long_number::operator-() const {
     return ret;
 }
 
+//overloaded operator +. returns long_number this + y
 long_number long_number::operator+(long_number y) {
     long_number ret;
     if (sign == y.sign) {
@@ -277,6 +291,7 @@ long_number long_number::operator+(long_number y) {
     return ret;
 }
 
+//overloaded operator -. returns long_number this - y
 long_number long_number::operator-(const long_number& y) {
     long_number ret;
     long_number sum = (*this) + (-y);
@@ -290,11 +305,13 @@ long_number long_number::operator-(const long_number& y) {
     return ret;
 }
 
+//overloaded operator *. returns long_number this * y
 long_number long_number::operator*(const long_number& y) {
     long_number prod = simple_mult((*this), y);
     return prod;
 }
 
+//returns long_number this as a string
 std::string long_number::ln_to_string() {
     std::string ret;
     if (sign == -1) {
@@ -312,13 +329,23 @@ std::string long_number::ln_to_string() {
     return ret;
 }
 
+//default constructor. creates long_number 0;
 long_number::long_number() {
     value = "0";
     sign = 1;
     precision = 0;
 }
 
-long_number::long_number(double x) {
+//constructor from int. creates long_number that equals x;
+long_number::long_number(int x) {
+    std::string s = std::to_string(std::abs(x));
+    sign = (x > 0 ? 1 : -1);
+    precision = 0;
+    value = s;
+}
+
+//constructor from double. creates long number that equals x;
+long_number::long_number(long double x) {
     std::string s = std::to_string(x);
     int i = 0;
     bool flag_point = false;
@@ -351,6 +378,41 @@ long_number::long_number(double x) {
     value = ret;
 }
 
+//constructor from string. creates long number that equals x;
+long_number::long_number(std::string x) {
+    std::string s = x;
+    int i = 0;
+    bool flag_point = false;
+    int after_point = 0;
+    std::string ret;
+
+    if (s[0] == '-') {
+        sign = -1;
+        i++;
+    } else {
+        sign = 1;
+    }
+
+    while (i < s.size()) {
+        if (s[i] == '.') {
+            flag_point = true;
+        }
+
+        if (isdigit(s[i])) {
+            ret.push_back(s[i]);
+
+            if (flag_point) {
+                after_point++;
+            }
+        }
+        i++;
+    }
+
+    precision = after_point;
+    value = ret;
+}
+
+//simple multiplication with complexity o(x^2). returns long_number = x * y
 long_number simple_mult(const long_number& x, const long_number& y) {
     std::string a = x.value;
     std::string b = y.value;
@@ -415,5 +477,118 @@ long_number simple_mult(const long_number& x, const long_number& y) {
 
         return ret;
     }
+}
 
+//returns long_numbers that is reverse of given long_number with given precision.
+//complexity is o(n^3)
+long_number get_reverse(const long_number& x, const int prec) {
+    if (x.value == "0") {
+        std::cout << "Warning! Division by zero!" << std::endl;
+        long_number res;
+        res.value = "0";
+        res.sign = 1;
+        res.precision = 0;
+        return res;
+    } else {
+        int res_sign = x.sign;
+        int res_precision = prec;
+        std::string ans;
+
+        long_number int_x = x;
+        int_x.precision = 0;
+        int_x.sign = 1;
+
+        int i = 1;
+        int after_point = -1;
+        long_number cur;
+        cur.value = "1";
+        int f1 = 1;
+
+        if (cur < int_x ) {
+            ans.push_back('0');
+            after_point++;
+        }
+
+        while (after_point < res_precision && f1 == 1) {
+            while (cur.value != "0" && !cur.value.empty() && cur < int_x) {
+                cur.value.push_back('0');
+                if (cur < int_x ) {
+                    ans.push_back('0');
+                    after_point++;
+                }
+                i++;
+                int q = 0;
+                while (cur.value[q] == '0') {
+                    q++;
+                }
+                cur.value = cur.value.substr(q, cur.value.size() - q);
+                if (cur.value.empty()) {
+                    f1 = 0;
+                }
+            }
+            if (cur.value != "") {
+                int mul = 0;
+                while (int_x * (mul + 1) <= cur) {
+                    ++mul;
+                }
+                if (mul > 0) {
+                    ans += long_number(mul).value;
+                    after_point += long_number(mul).value.size();
+                    long_number diff = cur - int_x * mul;
+                    cur = diff;
+                    if (cur.value == "0") {
+                        break;
+                    }
+                } else {
+                    ans += "0";
+                    after_point++;
+                }
+
+            } else {
+                break;
+            }
+
+        }
+
+        long_number res;
+        res.value = ans;
+        res.sign = res_sign;
+        res.precision = std::min(res_precision, after_point);
+        return res;
+    }
+}
+
+//overloaded operator /. returns long_number this / y
+long_number long_number::operator/(const long_number& y) {
+
+    long_number int_y = y;
+    int_y.precision = 0;
+    int_y.sign = 1;
+
+    int d = y.value.size() - this->value.size();
+    int r = d > 0 ? d : -d;
+    long_number rev_y;
+    if (r > 0) {
+        rev_y = get_reverse(int_y, y.precision + this->precision + r * 20);
+    } else {
+        rev_y = get_reverse(int_y, y.precision + this->precision + 20);
+    }
+
+
+    long_number rel = simple_mult((*this), rev_y);
+    rel.sign = y.sign * this->sign;
+    rel.precision -= y.precision;
+
+    int q = 0;
+    while (rel.value[q] == '0' && q < rel.value.size() - rel.precision - 1) {
+        q++;
+    }
+    rel.value = rel.value.substr(q, rel.value.size() - q);
+
+    return rel;
+}
+
+long_number operator ""_ln(long double x) {
+    long_number ret = long_number(x);
+    return ret;
 }
