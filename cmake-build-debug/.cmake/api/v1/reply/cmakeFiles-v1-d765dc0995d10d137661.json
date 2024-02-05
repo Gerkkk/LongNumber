@@ -54,6 +54,21 @@
 		{
 			"isCMake" : true,
 			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2023.3.3/bin/cmake/win/x64/share/cmake-3.27/Modules/CMakeFindCodeBlocks.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2023.3.3/bin/cmake/win/x64/share/cmake-3.27/Modules/CMakeExtraGeneratorDetermineCompilerMacrosAndIncludeDirs.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
+			"path" : "C:/Program Files/JetBrains/CLion 2023.3.3/bin/cmake/win/x64/share/cmake-3.27/Modules/ProcessorCount.cmake"
+		},
+		{
+			"isCMake" : true,
+			"isExternal" : true,
 			"path" : "C:/Program Files/JetBrains/CLion 2023.3.3/bin/cmake/win/x64/share/cmake-3.27/Modules/CMakeCInformation.cmake"
 		},
 		{
@@ -154,8 +169,8 @@
 	"kind" : "cmakeFiles",
 	"paths" : 
 	{
-		"build" : "C:/Users/danpo/CLionProjects/untitled1/cmake-build-debug",
-		"source" : "C:/Users/danpo/CLionProjects/untitled1"
+		"build" : "C:/Users/danpo/CLionProjects/untitled3/Test/cmake-build-debug",
+		"source" : "C:/Users/danpo/CLionProjects/untitled3/Test"
 	},
 	"version" : 
 	{
