@@ -84,6 +84,51 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"gmock\" \"gtest\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	"C:\Program Files\JetBrains\CLion 2023.3.3\bin\cmake\win\x64\bin\cmake.exe" -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	"C:\Program Files\JetBrains\CLion 2023.3.3\bin\cmake\win\x64\bin\cmake.exe" -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	"C:\Program Files\JetBrains\CLion 2023.3.3\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	"C:\Program Files\JetBrains\CLion 2023.3.3\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	"C:\Program Files\JetBrains\CLion 2023.3.3\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	"C:\Program Files\JetBrains\CLion 2023.3.3\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # The main all target
 all: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\danpo\CLionProjects\untitled3\Test\cmake-build-debug\CMakeFiles C:\Users\danpo\CLionProjects\untitled3\Test\cmake-build-debug\\CMakeFiles\progress.marks
@@ -129,41 +174,82 @@ Library/fast:
 .PHONY : Library/fast
 
 #=============================================================================
-# Target rules for targets named Test
+# Target rules for targets named GetPi
 
 # Build rule for target.
-Test: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Test
-.PHONY : Test
+GetPi: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 GetPi
+.PHONY : GetPi
 
 # fast build rule for target.
-Test/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Test.dir\build.make CMakeFiles/Test.dir/build
-.PHONY : Test/fast
+GetPi/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GetPi.dir\build.make CMakeFiles/GetPi.dir/build
+.PHONY : GetPi/fast
 
-Source/Test.obj: Source/Test.cpp.obj
-.PHONY : Source/Test.obj
+#=============================================================================
+# Target rules for targets named Google_Tests_run
 
-# target to build an object file
-Source/Test.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Test.dir\build.make CMakeFiles/Test.dir/Source/Test.cpp.obj
-.PHONY : Source/Test.cpp.obj
+# Build rule for target.
+Google_Tests_run: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Google_Tests_run
+.PHONY : Google_Tests_run
 
-Source/Test.i: Source/Test.cpp.i
-.PHONY : Source/Test.i
+# fast build rule for target.
+Google_Tests_run/fast:
+	$(MAKE) $(MAKESILENT) -f Google_tests\CMakeFiles\Google_Tests_run.dir\build.make Google_tests/CMakeFiles/Google_Tests_run.dir/build
+.PHONY : Google_Tests_run/fast
 
-# target to preprocess a source file
-Source/Test.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Test.dir\build.make CMakeFiles/Test.dir/Source/Test.cpp.i
-.PHONY : Source/Test.cpp.i
+#=============================================================================
+# Target rules for targets named gmock
 
-Source/Test.s: Source/Test.cpp.s
-.PHONY : Source/Test.s
+# Build rule for target.
+gmock: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 gmock
+.PHONY : gmock
 
-# target to generate assembly for a file
-Source/Test.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Test.dir\build.make CMakeFiles/Test.dir/Source/Test.cpp.s
-.PHONY : Source/Test.cpp.s
+# fast build rule for target.
+gmock/fast:
+	$(MAKE) $(MAKESILENT) -f Google_tests\googletest-main\googlemock\CMakeFiles\gmock.dir\build.make Google_tests/googletest-main/googlemock/CMakeFiles/gmock.dir/build
+.PHONY : gmock/fast
+
+#=============================================================================
+# Target rules for targets named gmock_main
+
+# Build rule for target.
+gmock_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 gmock_main
+.PHONY : gmock_main
+
+# fast build rule for target.
+gmock_main/fast:
+	$(MAKE) $(MAKESILENT) -f Google_tests\googletest-main\googlemock\CMakeFiles\gmock_main.dir\build.make Google_tests/googletest-main/googlemock/CMakeFiles/gmock_main.dir/build
+.PHONY : gmock_main/fast
+
+#=============================================================================
+# Target rules for targets named gtest
+
+# Build rule for target.
+gtest: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 gtest
+.PHONY : gtest
+
+# fast build rule for target.
+gtest/fast:
+	$(MAKE) $(MAKESILENT) -f Google_tests\googletest-main\googletest\CMakeFiles\gtest.dir\build.make Google_tests/googletest-main/googletest/CMakeFiles/gtest.dir/build
+.PHONY : gtest/fast
+
+#=============================================================================
+# Target rules for targets named gtest_main
+
+# Build rule for target.
+gtest_main: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 gtest_main
+.PHONY : gtest_main
+
+# fast build rule for target.
+gtest_main/fast:
+	$(MAKE) $(MAKESILENT) -f Google_tests\googletest-main\googletest\CMakeFiles\gtest_main.dir\build.make Google_tests/googletest-main/googletest/CMakeFiles/gtest_main.dir/build
+.PHONY : gtest_main/fast
 
 Source/library.obj: Source/library.cpp.obj
 .PHONY : Source/library.obj
@@ -189,6 +275,30 @@ Source/library.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Library.dir\build.make CMakeFiles/Library.dir/Source/library.cpp.s
 .PHONY : Source/library.cpp.s
 
+getpi/GetPi.obj: getpi/GetPi.cpp.obj
+.PHONY : getpi/GetPi.obj
+
+# target to build an object file
+getpi/GetPi.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GetPi.dir\build.make CMakeFiles/GetPi.dir/getpi/GetPi.cpp.obj
+.PHONY : getpi/GetPi.cpp.obj
+
+getpi/GetPi.i: getpi/GetPi.cpp.i
+.PHONY : getpi/GetPi.i
+
+# target to preprocess a source file
+getpi/GetPi.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GetPi.dir\build.make CMakeFiles/GetPi.dir/getpi/GetPi.cpp.i
+.PHONY : getpi/GetPi.cpp.i
+
+getpi/GetPi.s: getpi/GetPi.cpp.s
+.PHONY : getpi/GetPi.s
+
+# target to generate assembly for a file
+getpi/GetPi.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\GetPi.dir\build.make CMakeFiles/GetPi.dir/getpi/GetPi.cpp.s
+.PHONY : getpi/GetPi.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -196,15 +306,24 @@ help:
 	@echo ... clean
 	@echo ... depend
 	@echo ... edit_cache
+	@echo ... install
+	@echo ... install/local
+	@echo ... install/strip
+	@echo ... list_install_components
 	@echo ... rebuild_cache
+	@echo ... GetPi
+	@echo ... Google_Tests_run
 	@echo ... Library
-	@echo ... Test
-	@echo ... Source/Test.obj
-	@echo ... Source/Test.i
-	@echo ... Source/Test.s
+	@echo ... gmock
+	@echo ... gmock_main
+	@echo ... gtest
+	@echo ... gtest_main
 	@echo ... Source/library.obj
 	@echo ... Source/library.i
 	@echo ... Source/library.s
+	@echo ... getpi/GetPi.obj
+	@echo ... getpi/GetPi.i
+	@echo ... getpi/GetPi.s
 .PHONY : help
 
 

@@ -28,7 +28,8 @@ namespace Lnum {
         [[nodiscard]] LongNumber abs() const;
 
         std::string to_string() const;
-
+        LongNumber mult_mod(const Lnum::LongNumber& y, int &mod);
+        LongNumber div_mod(const Lnum::LongNumber& y, int &mod);
         //overloaded operators
         LongNumber operator-() const;
 
@@ -42,6 +43,8 @@ namespace Lnum {
 
 
         std::strong_ordering operator<=>(const LongNumber &x) const;
+        bool operator==(const LongNumber &x) const;
+        bool operator!=(const LongNumber &x) const;
 
 
     private:
