@@ -1,25 +1,5 @@
 #include "../Headers/library.h"
 
-
-
-
-//prints Lnum::LongNumber given
-void Lnum::LongNumber::print_ln() const{
-    if (sign == -1) {
-        std::cout << '-';
-    }
-    for(int i = 0; i < value.size() - precision; ++i) {
-        std::cout << value[i];
-    }
-    if (precision > 0){
-        std::cout << '.';
-    }
-    for(size_t i = value.size() - precision; i < value.size(); ++i) {
-        std::cout << value[i];
-    }
-    std::cout << std::endl;
-}
-
 //Return Lnum::LongNumber which is an absolute value of given Lnum::LongNumber
 [[nodiscard]] Lnum::LongNumber Lnum::LongNumber::abs() const {
     LongNumber ret;

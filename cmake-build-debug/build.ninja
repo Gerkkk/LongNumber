@@ -104,6 +104,39 @@ build GetPi.exe: CXX_EXECUTABLE_LINKER__GetPi_Debug CMakeFiles/GetPi.dir/getpi/G
   TARGET_IMPLIB = libGetPi.dll.a
   TARGET_PDB = GetPi.exe.dbg
 
+# =============================================================================
+# Object build statements for EXECUTABLE target Test
+
+
+#############################################
+# Order-only phony target for Test
+
+build cmake_object_order_depends_target_Test: phony || cmake_object_order_depends_target_Library
+
+build CMakeFiles/Test.dir/test/Test.cpp.obj: CXX_COMPILER__Test_unscanned_Debug C$:/Users/danpo/CLionProjects/untitled3/Test/test/Test.cpp || cmake_object_order_depends_target_Test
+  DEP_FILE = CMakeFiles\Test.dir\test\Test.cpp.obj.d
+  FLAGS = -g -std=gnu++20 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\Test.dir
+  OBJECT_FILE_DIR = CMakeFiles\Test.dir\test
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target Test
+
+
+#############################################
+# Link the executable Test.exe
+
+build Test.exe: CXX_EXECUTABLE_LINKER__Test_Debug CMakeFiles/Test.dir/test/Test.cpp.obj | libLibrary.a || libLibrary.a
+  FLAGS = -g
+  LINK_LIBRARIES = libLibrary.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\Test.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = Test.exe
+  TARGET_IMPLIB = libTest.dll.a
+  TARGET_PDB = Test.exe.dbg
+
 
 #############################################
 # Utility command for edit_cache
@@ -622,6 +655,8 @@ build Google_Tests_run.exe: phony Google_tests/Google_Tests_run.exe
 
 build Library: phony libLibrary.a
 
+build Test: phony Test.exe
+
 build gmock: phony lib/libgmock.a
 
 build gmock_main: phony lib/libgmock_main.a
@@ -646,7 +681,7 @@ build libgtest_main.a: phony lib/libgtest_main.a
 #############################################
 # Folder: C:/Users/danpo/CLionProjects/untitled3/Test/cmake-build-debug
 
-build all: phony libLibrary.a GetPi.exe Google_tests/all
+build all: phony libLibrary.a GetPi.exe Test.exe Google_tests/all
 
 # =============================================================================
 

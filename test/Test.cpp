@@ -76,6 +76,31 @@ TEST(Compare, comp9) {
     EXPECT_EQ(ans, ans_int);
 }
 
+
+TEST(Compare, comp10) {
+    LongNumber a = LongNumber("-0.0");
+    LongNumber b = LongNumber("0.0");
+    bool ans = (a == b);
+    bool ans_int = true;
+    EXPECT_EQ(ans, ans_int);
+}
+
+TEST(Compare, comp11) {
+    LongNumber a = LongNumber("-200.1");
+    LongNumber b = LongNumber("200.1");
+    bool ans = (a != b);
+    bool ans_int = true;
+    EXPECT_EQ(ans, ans_int);
+}
+
+TEST(Compare, comp12) {
+    LongNumber a = LongNumber("200.1");
+    LongNumber b = LongNumber("200.1");
+    bool ans = (a != b);
+    bool ans_int = false;
+    EXPECT_EQ(ans, ans_int);
+}
+
 TEST(Abs, abs1) {
     LongNumber a = LongNumber("10.10922");
     auto ans = a.abs();
@@ -127,6 +152,22 @@ TEST(Add, add3) {
     EXPECT_EQ(ans, ans_int);
 }
 
+TEST(Add, add4) {
+    LongNumber a = LongNumber("-10.102");
+    LongNumber b = LongNumber("10.101");
+    auto ans = (a + b);
+    auto ans_int = LongNumber("-0.001");
+    EXPECT_EQ(ans, ans_int);
+}
+
+TEST(Add, add5) {
+    LongNumber a = LongNumber("-10.101");
+    LongNumber b = LongNumber("10.102");
+    auto ans = (a + b);
+    auto ans_int = LongNumber("0.001");
+    EXPECT_EQ(ans, ans_int);
+}
+
 TEST(Diff, diff1) {
     LongNumber a = LongNumber("10.102");
     LongNumber b = LongNumber("10.101");
@@ -140,6 +181,14 @@ TEST(Diff, diff2) {
     LongNumber b = LongNumber("10.101");
     auto ans = (a - b);
     auto ans_int = LongNumber("0.001");
+    EXPECT_EQ(ans, ans_int);
+}
+
+TEST(Diff, diff3) {
+    LongNumber a = LongNumber("10.101");
+    LongNumber b = LongNumber("10.101");
+    auto ans = (a - b);
+    auto ans_int = LongNumber("0");
     EXPECT_EQ(ans, ans_int);
 }
 
@@ -182,6 +231,14 @@ TEST(Mult, mult5) {
     EXPECT_EQ(ans, cor_ans);
 }
 
+TEST(Mult, mult6) {
+    LongNumber a = LongNumber("0");
+    LongNumber b = LongNumber("0");
+    auto ans = (a * b);
+    auto cor_ans = LongNumber("0");
+    EXPECT_EQ(ans, cor_ans);
+}
+
 TEST(Div, div1) {
     LongNumber a = LongNumber("1023.45");
     LongNumber b = LongNumber("1");
@@ -214,6 +271,30 @@ TEST(Div, div4) {
     auto ans = (a / b);
     auto cor_ans = LongNumber("-0.8373015873");
     std::cout << "Test div2. Expected:" << cor_ans.to_string() << " Received: " << ans.to_string() << std::endl;
+    EXPECT_EQ(ans, cor_ans);
+}
+
+TEST(Div, div5) {
+    LongNumber a = LongNumber("10.55");
+    LongNumber b = LongNumber("0");
+    auto ans = (a / b);
+    auto cor_ans = LongNumber("0");
+    EXPECT_EQ(ans, cor_ans);
+}
+
+TEST(Div, div6) {
+    LongNumber a = LongNumber("10.55");
+    LongNumber b = LongNumber("0.001");
+    auto ans = (a / b);
+    auto cor_ans = LongNumber("10550");
+    EXPECT_EQ(ans, cor_ans);
+}
+
+TEST(Div, div7) {
+    LongNumber a = LongNumber("10.55");
+    LongNumber b = LongNumber("1000000");
+    auto ans = (a / b);
+    auto cor_ans = LongNumber("0.00001055");
     EXPECT_EQ(ans, cor_ans);
 }
 
@@ -253,6 +334,13 @@ TEST(ToString, tostring1) {
 TEST(ToString, tostring2) {
     std::string s = "0.021";
     LongNumber a = LongNumber(0.021_ln);
+    EXPECT_EQ(a, LongNumber(s));
+    EXPECT_EQ(a.to_string(), s);
+}
+
+TEST(ToString, tostring3) {
+    std::string s = "-0.021000";
+    LongNumber a = LongNumber(-0.021_ln);
     EXPECT_EQ(a, LongNumber(s));
     EXPECT_EQ(a.to_string(), s);
 }

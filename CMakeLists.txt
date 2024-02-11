@@ -11,3 +11,6 @@ add_library(Library STATIC Source/library.cpp)
 add_executable(GetPi getpi/GetPi.cpp)
 target_link_libraries(GetPi Library)
 
+add_executable(Test test/Test.cpp)
+target_link_libraries(Test Library)
+

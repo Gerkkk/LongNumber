@@ -49,9 +49,9 @@ namespace Lnum {
 
     private:
         //methods
-        [[nodiscard]] int compare_abs(LongNumber x) const;
+        int compare_abs(LongNumber x) const;
 
-        [[nodiscard]] LongNumber promote_precision(const LongNumber &x) const;
+        LongNumber promote_precision(const LongNumber &x) const;
 
         [[nodiscard]] LongNumber sum_abs(LongNumber &x) const;
 

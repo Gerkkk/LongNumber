@@ -1,5 +1,6 @@
 C:/Users/danpo/CLionProjects/untitled3/Test/cmake-build-debug/CMakeFiles/Library.dir
 C:/Users/danpo/CLionProjects/untitled3/Test/cmake-build-debug/CMakeFiles/GetPi.dir
+C:/Users/danpo/CLionProjects/untitled3/Test/cmake-build-debug/CMakeFiles/Test.dir
 C:/Users/danpo/CLionProjects/untitled3/Test/cmake-build-debug/CMakeFiles/edit_cache.dir
 C:/Users/danpo/CLionProjects/untitled3/Test/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 C:/Users/danpo/CLionProjects/untitled3/Test/cmake-build-debug/CMakeFiles/list_install_components.dir
