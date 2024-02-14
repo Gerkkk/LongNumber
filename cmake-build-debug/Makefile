@@ -56,10 +56,10 @@ RM = "C:\Program Files\JetBrains\CLion 2023.3.3\bin\cmake\win\x64\bin\cmake.exe"
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\danpo\CLionProjects\untitled3\Test
+CMAKE_SOURCE_DIR = C:\Users\danpo\CLionProjects\untitled6\Test
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\danpo\CLionProjects\untitled3\Test\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\danpo\CLionProjects\untitled6\Test\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -131,9 +131,9 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\danpo\CLionProjects\untitled3\Test\cmake-build-debug\CMakeFiles C:\Users\danpo\CLionProjects\untitled3\Test\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\danpo\CLionProjects\untitled6\Test\cmake-build-debug\CMakeFiles C:\Users\danpo\CLionProjects\untitled6\Test\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\danpo\CLionProjects\untitled3\Test\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\danpo\CLionProjects\untitled6\Test\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -185,6 +185,19 @@ GetPi: cmake_check_build_system
 GetPi/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\GetPi.dir\build.make CMakeFiles/GetPi.dir/build
 .PHONY : GetPi/fast
+
+#=============================================================================
+# Target rules for targets named Test
+
+# Build rule for target.
+Test: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 Test
+.PHONY : Test
+
+# fast build rule for target.
+Test/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Test.dir\build.make CMakeFiles/Test.dir/build
+.PHONY : Test/fast
 
 #=============================================================================
 # Target rules for targets named Google_Tests_run
@@ -299,6 +312,30 @@ getpi/GetPi.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\GetPi.dir\build.make CMakeFiles/GetPi.dir/getpi/GetPi.cpp.s
 .PHONY : getpi/GetPi.cpp.s
 
+test/Test.obj: test/Test.cpp.obj
+.PHONY : test/Test.obj
+
+# target to build an object file
+test/Test.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Test.dir\build.make CMakeFiles/Test.dir/test/Test.cpp.obj
+.PHONY : test/Test.cpp.obj
+
+test/Test.i: test/Test.cpp.i
+.PHONY : test/Test.i
+
+# target to preprocess a source file
+test/Test.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Test.dir\build.make CMakeFiles/Test.dir/test/Test.cpp.i
+.PHONY : test/Test.cpp.i
+
+test/Test.s: test/Test.cpp.s
+.PHONY : test/Test.s
+
+# target to generate assembly for a file
+test/Test.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Test.dir\build.make CMakeFiles/Test.dir/test/Test.cpp.s
+.PHONY : test/Test.cpp.s
+
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -314,6 +351,7 @@ help:
 	@echo ... GetPi
 	@echo ... Google_Tests_run
 	@echo ... Library
+	@echo ... Test
 	@echo ... gmock
 	@echo ... gmock_main
 	@echo ... gtest
@@ -324,6 +362,9 @@ help:
 	@echo ... getpi/GetPi.obj
 	@echo ... getpi/GetPi.i
 	@echo ... getpi/GetPi.s
+	@echo ... test/Test.obj
+	@echo ... test/Test.i
+	@echo ... test/Test.s
 .PHONY : help
 
 

@@ -51,8 +51,12 @@ LongNumber chudnovsky(int n, int mod){
         log *= 2;
         y++;
     }
+    int plus = 5;
+    if (mod > 100) {
+        plus = mod / 10 + 10;
+    }
     int n_mod = mod + 2;
-    for (int i = 0; i < y + 3; i++) {
+    for (int i = 0; i < y + plus; i++) {
         LongNumber part1 = LongNumber(10005.0_ln).div_mod(beg, n_mod);
         LongNumber part2 = beg + part1;
         LongNumber part3 = LongNumber(0.5_ln).mult_mod(part2, n_mod);
@@ -66,9 +70,10 @@ LongNumber chudnovsky(int n, int mod){
     return part1.div_mod(part2, mod);
 }
 
+//The biggest correctly calculated precision is 345 digits.
 int main() {
     int mod;
-    std::cout << "Enter number of digits after point (up to 499)" << std::endl;
+    std::cout << "Enter number of digits after point (up to 345)" << std::endl;
     std::cin >> mod;
     clock_t t1 = clock();
     std::string cand = chudnovsky(std::max(2, mod / 8), mod + 1).to_string();

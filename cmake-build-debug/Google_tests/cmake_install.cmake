@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/danpo/CLionProjects/untitled3/Test/Google_tests
+# Install script for directory: C:/Users/danpo/CLionProjects/untitled6/Test/Google_tests
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -39,6 +39,6 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("C:/Users/danpo/CLionProjects/untitled3/Test/cmake-build-debug/Google_tests/googletest-main/cmake_install.cmake")
+  include("C:/Users/danpo/CLionProjects/untitled6/Test/cmake-build-debug/Google_tests/googletest-main/cmake_install.cmake")
 endif()
 

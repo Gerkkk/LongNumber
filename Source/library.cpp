@@ -445,7 +445,7 @@ Lnum::LongNumber Lnum::LongNumber::simple_mult(const Lnum::LongNumber& x, const 
 
 //returns Lnum::LongNumbers that is reverse of given Lnum::LongNumber with given precision.
 //complexity is o(n^3)
-Lnum::LongNumber Lnum::LongNumber::get_reverse(const Lnum::LongNumber& x, const int prec){
+Lnum::LongNumber Lnum::LongNumber::get_reverse(const Lnum::LongNumber& x, const int prec) {
     if (x.value == "0") {
         std::cout << "Warning! Division by zero!" << std::endl;
         Lnum::LongNumber res;
@@ -453,8 +453,14 @@ Lnum::LongNumber Lnum::LongNumber::get_reverse(const Lnum::LongNumber& x, const 
         res.sign = 1;
         res.precision = 0;
         return res;
-    } else {
-        int res_sign = x.sign;
+    } else if(x.abs() == LongNumber(1.0_ln)) {
+        Lnum::LongNumber res;
+        res.value = "1";
+        res.precision = 0;
+        res.sign = x.sign;
+        return res;
+    }else {
+        int res_sign = 1;
         std::string ans;
 
         Lnum::LongNumber int_x = x;
@@ -487,33 +493,48 @@ Lnum::LongNumber Lnum::LongNumber::get_reverse(const Lnum::LongNumber& x, const 
         }
 
         int tot_dig = 0;
+        int max_nines = 0;
+        int tot_nines = 0;
+        int last_nine = 0;
         int shift = delta - delta_cur;
 //        std::cout << shift << std::endl;
         while (cur > LongNumber(0) && tot_dig < prec + 1) {
-                int mul = 0;
+            int mul = 0;
 
-                while (cur > int_x && cur - int_x >= LongNumber(0)) {
-                    ++mul;
+            while (cur > int_x && cur - int_x >= LongNumber(0)) {
+                ++mul;
 //                    std::cout << cur.to_string() <<  " " << int_x.to_string() << " " << (cur - int_x).to_string() << std::endl;
-                    cur = cur - int_x;
-                }
-                ans += Lnum::LongNumber(mul).value;
-                cur.value.push_back('0');
+                cur = cur - int_x;
+            }
+            ans += Lnum::LongNumber(mul).value;
+            cur.value.push_back('0');
 //                std::cout << "2)" << int_x.to_string() << " " << cur.to_string() << std::endl;
-                tot_dig++;
+            tot_dig++;
 
-                int f1 = 1;
-                for(int  i = 0; i < cur.value.size(); i++) {
-                    if (cur.value[i] != '0') {
-                        f1 = 0;
-                    }
+            if (mul == 9) {
+                if (last_nine == 1) {
+                    tot_nines++;
+                } else {
+                    last_nine = 1;
+                    tot_nines = 1;
                 }
-                if (f1 == 1) {
-                    while (cur.value.back()) {
-                        cur.value.pop_back();
-                    }
-                    cur.value.push_back('0');
+                max_nines = std::max(max_nines, tot_nines);
+            } else {
+                last_nine = 0;
+            }
+
+            int f1 = 1;
+            for(int  i = 0; i < cur.value.size(); i++) {
+                if (cur.value[i] != '0') {
+                    f1 = 0;
                 }
+            }
+            if (f1 == 1) {
+                while (cur.value.back()) {
+                    cur.value.pop_back();
+                }
+                cur.value.push_back('0');
+            }
         }
 //        std::cout << ans << std::endl;
         Lnum::LongNumber res;
@@ -538,6 +559,23 @@ Lnum::LongNumber Lnum::LongNumber::get_reverse(const Lnum::LongNumber& x, const 
                 }
                 res.value = add1 + res.value;
             }
+        }
+
+        if (max_nines >= 10) {
+            while (res.precision > 0 && res.value.back() != '9') {
+                res.value.pop_back();
+                --res.precision;
+            }
+
+            while (res.precision > 0 && res.value.back() == '9') {
+                res.value.pop_back();
+                --res.precision;
+            }
+
+            char last = res.value.back();
+            last++;
+            res.value.pop_back();
+            res.value.push_back(last);
         }
 
         return res;
@@ -569,13 +607,20 @@ Lnum::LongNumber Lnum::LongNumber::div_mod(const Lnum::LongNumber& y, int &mod) 
 
 //overloaded operator /. returns Lnum::LongNumber this / y
 Lnum::LongNumber Lnum::LongNumber::operator/(const Lnum::LongNumber& y) const{
+    if(y.abs() == (*this).abs()) {
+        Lnum::LongNumber res;
+        res.value = "1";
+        res.precision = 0;
+        res.sign = (*this).sign * y.sign;
+        return res;
+    } else {
+        Lnum::LongNumber int_y = y;
+        int_y.sign = 1;
 
-    Lnum::LongNumber int_y = y;
-    int_y.sign = 1;
-
-    LongNumber rev_y = get_reverse(int_y, 50);
-    LongNumber rel = simple_mult(*this, rev_y);
-    return rel;
+        LongNumber rev_y = get_reverse(int_y, 50);
+        LongNumber rel = simple_mult(*this, rev_y);
+        return rel;
+    }
 }
 
 Lnum::LongNumber operator ""_ln(long double x) {

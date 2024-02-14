@@ -9,9 +9,7 @@
 namespace Lnum {
     struct LongNumber {
     public:
-        std::string value;
-        int precision;
-        int sign;
+
 
         //constructors
         LongNumber();
@@ -48,6 +46,10 @@ namespace Lnum {
 
 
     private:
+        std::string value;
+        int precision;
+        int sign;
+
         //methods
         int compare_abs(LongNumber x) const;
 
