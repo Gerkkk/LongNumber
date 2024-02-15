@@ -66,13 +66,17 @@ std::strong_ordering Lnum::LongNumber::operator<=>(const LongNumber &x) const {
         } else if (-1 == x.sign && sign == -1) {
             res = (compare_abs(x) == -1);
         } else if (sign == 1 && x.sign == -1) {
-            if (value == "0" && x.value == "0") {
-                res = false;
+            if ((value == "0" || value == "00") && (x.value == "0" || x.value == "00")) {
+                return std::strong_ordering::equal;
             } else {
                 res = true;
             }
         } else if (sign == -1 && x.sign == 1) {
-            res = false;
+            if ((value == "0" || value == "00") && (x.value == "0" || x.value == "00")) {
+                return std::strong_ordering::equal;
+            } else {
+                res = false;
+            }
         }
 
         if (res) {
@@ -259,14 +263,7 @@ Lnum::LongNumber Lnum::LongNumber::operator+(Lnum::LongNumber y) const{
 Lnum::LongNumber Lnum::LongNumber::operator-(const Lnum::LongNumber& y) const{
     Lnum::LongNumber ret;
     Lnum::LongNumber sum = (*this) + (-y);
-    if (sum.value.empty()) {
-        ret.value = "0";
-    } else {
-        ret.value = sum.value;
-    }
-    ret.precision = sum.precision;
-    ret.sign = sum.sign;
-    return ret;
+    return sum;
 }
 
 //overloaded operator *. returns Lnum::LongNumber this * y
@@ -317,12 +314,8 @@ Lnum::LongNumber::LongNumber(long double x) {
     int after_point = 0;
     std::string ret;
 
-    if (s[0] == '-') {
-        sign = -1;
-        i++;
-    } else {
-        sign = 1;
-    }
+    sign = 1;
+
 
     while (i < s.size()) {
         if (s[i] == '.') {
@@ -399,7 +392,17 @@ Lnum::LongNumber Lnum::LongNumber::simple_mult(const Lnum::LongNumber& x, const 
         b = b.substr(u + 1, b.size() - u - 1);
     }
 
-    if (a == "0" || b == "0") {
+    int all_zera = 1, all_zerb = 1;
+    for(int i = 0; i < std::max(a.size(), b.size()); i++) {
+        if (i < a.size() && a[i] != '0') {
+            all_zera = 0;
+        }
+        if (i < b.size() && b[i] != '0') {
+            all_zerb = 0;
+        }
+    }
+
+    if (all_zera == 1 || all_zerb == 1) {
         Lnum::LongNumber ret;
         ret.sign = 1;
         ret.precision = 0;
@@ -522,19 +525,6 @@ Lnum::LongNumber Lnum::LongNumber::get_reverse(const Lnum::LongNumber& x, const 
             } else {
                 last_nine = 0;
             }
-
-            int f1 = 1;
-            for(int  i = 0; i < cur.value.size(); i++) {
-                if (cur.value[i] != '0') {
-                    f1 = 0;
-                }
-            }
-            if (f1 == 1) {
-                while (cur.value.back()) {
-                    cur.value.pop_back();
-                }
-                cur.value.push_back('0');
-            }
         }
 //        std::cout << ans << std::endl;
         Lnum::LongNumber res;
@@ -618,8 +608,43 @@ Lnum::LongNumber Lnum::LongNumber::operator/(const Lnum::LongNumber& y) const{
         int_y.sign = 1;
 
         LongNumber rev_y = get_reverse(int_y, 50);
-        LongNumber rel = simple_mult(*this, rev_y);
-        return rel;
+        LongNumber res = simple_mult(*this, rev_y);
+
+        int max_nines = 0;
+        int tot_nines = 0;
+        int last_nine = 0;
+
+        for (auto mul : res.value) {
+            if (mul == '9') {
+                if (last_nine == 1) {
+                    tot_nines++;
+                } else {
+                    last_nine = 1;
+                    tot_nines = 1;
+                }
+                max_nines = std::max(max_nines, tot_nines);
+            } else {
+                last_nine = 0;
+            }
+        }
+
+        if (max_nines >= 10) {
+            while (res.precision > 0 && res.value.back() != '9') {
+                res.value.pop_back();
+                --res.precision;
+            }
+
+            while (res.precision > 0 && res.value.back() == '9') {
+                res.value.pop_back();
+                --res.precision;
+            }
+
+            char last = res.value.back();
+            last++;
+            res.value.pop_back();
+            res.value.push_back(last);
+        }
+        return res;
     }
 }
 
