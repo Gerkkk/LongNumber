@@ -9,8 +9,6 @@
 namespace Lnum {
     struct LongNumber {
     public:
-
-
         //constructors
         LongNumber();
 
