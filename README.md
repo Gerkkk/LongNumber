@@ -1,4 +1,4 @@
-# Test
+# LongNumber
 <p>This library contains structure LongNumber - a floating point type for long arithmetic.</p>
 
 ## Methots and operators of *LongNumber*
