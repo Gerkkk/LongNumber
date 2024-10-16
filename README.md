@@ -9,3 +9,5 @@
 - Method **print_ln** prints *LongNumber*;
 - You can construct LongNumber from long double, std::string, user-defined floating-point literal _ln. Default constructor creates 0.
 - The program calculates Pi with the given precision. The biggest correctly calculated precision is 345 digits. 
+
+Class LongNumber was tested using Google tests. Samples are located in subdirectory testdir.
